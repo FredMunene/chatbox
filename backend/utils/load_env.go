@@ -6,10 +6,7 @@ import (
 	"strings"
 )
 
-
-var (
-	GoogleClientID, GoogleClientSecret, GithubClientID, GithubClientSecret string
-)
+var GoogleClientID, GoogleClientSecret, GithubClientID, GithubClientSecret string
 
 func LoadEnvVariables(fileName string) error {
 	file, err := os.Open(fileName)
@@ -19,14 +16,14 @@ func LoadEnvVariables(fileName string) error {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	for scanner.Scan(){
+	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 
 		if line == "" {
 			continue
 		}
 
-		parts := strings.SplitN(line,"=",2)
+		parts := strings.SplitN(line, "=", 2)
 		if len(parts) != 2 {
 			continue
 		}
@@ -34,14 +31,13 @@ func LoadEnvVariables(fileName string) error {
 		key := strings.TrimSpace(parts[0])
 		value := strings.TrimSpace(parts[1])
 
-		os.Setenv(key,value)
+		os.Setenv(key, value)
 	}
 
 	GithubClientID = os.Getenv("GithubClientID")
 	GithubClientSecret = os.Getenv("GithubClientID")
 	GoogleClientID = os.Getenv("GoogleClientID")
 	GoogleClientSecret = os.Getenv("GoogleClientSecret")
-
 
 	return scanner.Err()
 }

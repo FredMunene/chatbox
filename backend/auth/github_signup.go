@@ -96,5 +96,4 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 	default:
 		http.Redirect(w, r, "/sign-in?error=invalid_flow", http.StatusTemporaryRedirect)
 	}
-	
 }
