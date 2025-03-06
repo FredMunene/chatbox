@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strings"
 
 	"forum/backend/utils"
 
@@ -60,14 +59,8 @@ func validateState(r *http.Request) error {
 		return err
 	}
 
-	stateParts := strings.Split(cookie.Value, ":")
-	if len(stateParts) != 2 {
-		log.Printf("Invalid state cookie value: %s", cookie.Value)
-		return errors.New("invalid state cookie value")
-	}
-
 	//  check states match
-	if stateParts[0] != state {
+	if cookie.Value != state {
 		log.Printf("State don't match. Cookie value:%s, State:%s", cookie.Value, state)
 		return errors.New("invalid state")
 	}
@@ -137,7 +130,7 @@ func exchangeGithubCodeForToken(code string) (string, error) {
 		"client_id":     {utils.GithubClientID},
 		"client_secret": {utils.GithubClientSecret},
 		"code":          {code},
-		"redirect_uri":  {RedirectBaseUrl + "/auth/github/callback"}, 
+		"redirect_uri":  {RedirectBaseUrl + "/auth/github/callback"},
 	}
 
 	resp, err := http.PostForm(GithubTokenUrl, data)
@@ -166,7 +159,7 @@ func getGithubUserDetails(token string) (*GithubUser, error) {
 	}
 
 	req.Header.Set("Authorization", "token "+token)
-	req.Header.Set("Accept","application/json")
+	req.Header.Set("Accept", "application/json")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -187,7 +180,7 @@ func getGithubUserDetails(token string) (*GithubUser, error) {
 		}
 
 		req.Header.Set("Authorization", "token "+token)
-		req.Header.Set("Accept","application/json")
+		req.Header.Set("Accept", "application/json")
 
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
@@ -196,9 +189,9 @@ func getGithubUserDetails(token string) (*GithubUser, error) {
 		defer resp.Body.Close()
 
 		var emails []struct {
-			Email string `json:"email"`
-			Primary bool `json:"primary"`
-			Verified bool `json:"verified"`
+			Email    string `json:"email"`
+			Primary  bool   `json:"primary"`
+			Verified bool   `json:"verified"`
 		}
 
 		if err := json.NewDecoder(resp.Body).Decode(&emails); err != nil {
@@ -206,13 +199,13 @@ func getGithubUserDetails(token string) (*GithubUser, error) {
 		}
 
 		for _, email := range emails {
-			if email.Primary && email.Verified{
+			if email.Primary && email.Verified {
 				user.Email = email.Email
 				break
 			}
 		}
 
-		}
+	}
 
-		return &user, nil
+	return &user, nil
 }

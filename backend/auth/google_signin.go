@@ -12,7 +12,7 @@ import (
 func GoogleSignIn(w http.ResponseWriter, r *http.Request) {
 	// generate state with cookie?
 
-	state := generateStateCookie(w)
+	state := generateStateCookie(w, "signin")
 
 	// set the Google OAuth 2.0 authorization URL
 	redirectUrl := fmt.Sprintf(
