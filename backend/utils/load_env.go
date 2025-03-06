@@ -35,7 +35,7 @@ func LoadEnvVariables(fileName string) error {
 	}
 
 	GithubClientID = os.Getenv("GithubClientID")
-	GithubClientSecret = os.Getenv("GithubClientID")
+	GithubClientSecret = os.Getenv("GithubClientSecret")
 	GoogleClientID = os.Getenv("GoogleClientID")
 	GoogleClientSecret = os.Getenv("GoogleClientSecret")
 
