@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"forum/auth"
-	"forum/handlers"
+	"forum/backend/auth"
+	"forum/backend/handlers"
 )
 
 func main() {

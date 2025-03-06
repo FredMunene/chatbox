@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"forum/utils"
+	"forum/backend/utils"
 )
 
 func GoogleSignIn(w http.ResponseWriter, r *http.Request) {
@@ -55,5 +55,5 @@ func GoogleSignInCallback(w http.ResponseWriter, r *http.Request) {
 
 	println(user.Email, user.Sub, user.Name)
 
-	http.Redirect(w,r, "/home?status=success", http.StatusSeeOther)
+	http.Redirect(w, r, "/home?status=success", http.StatusSeeOther)
 }

@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"forum/auth"
+	"forum/backend/auth"
 
 	"golang.org/x/crypto/bcrypt"
 )

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"forum/utils"
+	"forum/backend/utils"
 
 	"github.com/google/uuid"
 )
