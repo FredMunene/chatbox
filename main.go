@@ -19,6 +19,10 @@ func main() {
 
 	//  start db
 
+	utils.Init()
+	defer utils.Database.Close()
+
+
 	router := route.InitRoutes()
 
 	server := &http.Server{
