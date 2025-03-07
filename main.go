@@ -4,23 +4,32 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
-	"forum/backend/auth"
-	"forum/backend/handlers"
+	"forum/backend/route"
 	"forum/backend/utils"
 )
 
 func main() {
 	// load environment variables
 
-	utils.LoadEnvVariables(".env")
+	if err := utils.LoadEnvVariables(".env"); err != nil {
+		fmt.Printf("Error loading .env file :%v", err)
+	}
 
-	http.HandleFunc("/signin", handlers.SigninHandler)
-	http.HandleFunc("/auth/google/signin", auth.GoogleSignIn)
-	http.HandleFunc("/auth/google/signin/callback", auth.GoogleSignInCallback)
-	http.HandleFunc("/auth/github/sign-up", auth.GithubSignUp)
-	http.HandleFunc("/auth/github/callback", auth.GithubCallback)
-	http.HandleFunc("/home", handlers.HomeHandler)
-	fmt.Println("Server running at: http://localhost:9000")
-	log.Fatal(http.ListenAndServe(":9000", nil))
+	//  start db
+
+	router := route.InitRoutes()
+
+	server := &http.Server{
+		Addr:         ":9000",
+		Handler:      router,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+	}
+
+	log.Printf("Server running at: http://localhost:%s\n","9000")
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
 }
