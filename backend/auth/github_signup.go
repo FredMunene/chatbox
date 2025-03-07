@@ -15,7 +15,7 @@ const (
 	GithubTokenUrl  = "https://github.com/login/oauth/access_token"
 	GithubUserUrl   = "https://api.github.com/user"
 	GithubEmailsUrl = "https://api.github.com/user/emails"
-	BaseUrl = "http://localhost:9000"
+	BaseUrl         = "http://localhost:9000"
 )
 
 type GithubUser struct {
@@ -23,7 +23,7 @@ type GithubUser struct {
 }
 
 func GithubSignUp(w http.ResponseWriter, r *http.Request) {
-	state := generateStateCookie(w, "sign-up")
+	state := generateStateCookie(w, "signup")
 
 	params := url.Values{
 		"client_id":    {utils.GithubClientID},
@@ -44,10 +44,6 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/sign-in?error=invalid_state", http.StatusTemporaryRedirect)
 		return
 	}
-
-	// log.Printf("Cookie state: %s", cookie.Value)
-	// log.Printf("URL state: %s", r.URL.Query().Get("state"))
-
 	// retrieve state from cookie
 	stateParts := strings.Split(cookie.Value, ":")
 	if len(stateParts) != 2 {
@@ -57,16 +53,6 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_, flowType := stateParts[0], stateParts[1]
-
-	// // check if state from cookie matches state from query
-
-	// urlState := strings.Split(r.URL.Query().Get("state"), ":")
-
-	// if urlState[0] != state {
-	// 	log.Println("State don't match")
-	// 	http.Redirect(w, r, "/sign-in?error=invalid_state", http.StatusTemporaryRedirect)
-	// 	return
-	// }
 
 	if err := validateState(r); err != nil {
 		log.Println("State don't match")
@@ -94,7 +80,7 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch flowType {
-	case "sign-up":
+	case "signup":
 		// handle user sign up
 		http.Redirect(w, r, "/home?status=success", http.StatusSeeOther)
 
