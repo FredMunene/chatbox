@@ -14,7 +14,7 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	// username := r.FormValue("username")
 	password := r.FormValue("password")
 
-	dbPassword, _ := bcrypt.GenerateFromPassword([]byte("hashedpassword"), bcrypt.DefaultCost)
+	dbPassword, _ := bcrypt.GenerateFromPassword([]byte("hashedPassword"), bcrypt.DefaultCost)
 	//  check if username and password are correct
 	//  retrieve user from sqlite3 database
 	//  if user is not found, return an error
@@ -33,5 +33,5 @@ func SigninHandler(w http.ResponseWriter, r *http.Request) {
 	//  return token to user
 }
 
-func Homehandler(w http.ResponseWriter, r *http.Request) {
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
