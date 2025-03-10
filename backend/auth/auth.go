@@ -25,12 +25,12 @@ func handleUserAuth(w http.ResponseWriter, email, username string) bool {
 	var userID int
 
 	err := util.Database.QueryRow(
-		"SELECT id from Users WHERE email = ?", email).Scan(&userID)
+		"SELECT id from tblUsers WHERE email = ?", email).Scan(&userID)
 
 	//  Create a new user if not found
 	if errors.Is(err, sql.ErrNoRows) {
 		res, err := util.Database.Exec(
-			"INSERT INTO users(username, email) VALUES(?,?)",
+			"INSERT INTO tblUsers(username, email) VALUES(?,?)",
 			username, email,
 		)
 		if err != nil {
@@ -45,12 +45,12 @@ func handleUserAuth(w http.ResponseWriter, email, username string) bool {
 		return false
 	}
 
-	SetSessionCookie(w, userID)
+	setSessionCookie(w, userID)
 	return true
 }
 
 // SetSessionCookie sets a session cookie for the given user ID.
-func SetSessionCookie(w http.ResponseWriter, userID int) {
+func setSessionCookie(w http.ResponseWriter, userID int) {
 	token := generateSessionToken()
 	_, err := util.Database.Exec(
 		"INSERT INTO tblSessions(user_id, session_token) VALUES(?, ?)",
