@@ -6,8 +6,11 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
-	"forum/backend/utils"
+	"forum/backend/handlers"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 const (
@@ -26,7 +29,7 @@ func GithubSignUp(w http.ResponseWriter, r *http.Request) {
 	state := generateStateCookie(w, "signup")
 
 	params := url.Values{
-		"client_id":    {utils.GithubClientID},
+		"client_id":    {util.GithubClientID},
 		"redirect_uri": {BaseUrl + "/auth/github/callback"},
 		"scope":        {"read:user user:email"},
 		"state":        {state},
@@ -82,10 +85,45 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 	switch flowType {
 	case "signup":
 		// handle user sign up
-		http.Redirect(w, r, "/home?status=success", http.StatusSeeOther)
+		if handleUserAuth(w, user.Email, user.Login) {
+			log.Printf("User signup successful")
+			http.Redirect(w, r, "/sign-up?status=success", http.StatusTemporaryRedirect)
+		} else {
+
+			log.Printf("User signup failed")
+			http.Redirect(w, r, "/sign-up?status=auth_failed", http.StatusSeeOther)
+
+		}
 
 	case "signin":
 		// handle user sign in
+		var userID int
+
+		err := util.Database.QueryRow("SELECT id FROM tblUsers WHERE email = ?", user.Email).Scan(&userID)
+		if err != nil {
+			http.Redirect(w, r, "/sign-inp?error=no_account", http.StatusTemporaryRedirect)
+		}
+
+		sessionToken := handlers.CreateSession()
+		if userID != 0 {
+			handlers.DeleteSession(userID)
+		}
+
+		handlers.EnableCors(w)
+		handlers.SetSessionCookie(w, sessionToken)
+		handlers.SetSessionData(sessionToken, "userId", userID)
+		handlers.SetSessionData(sessionToken, "userEmail", user.Email)
+
+		expiryTime := time.Now().Add(24 * time.Hour)
+
+		err = repositories.StoreSession(userID, sessionToken, expiryTime)
+		if err != nil {
+			log.Printf("Failed to store session token:%v", err)
+			http.Redirect(w, r, "/sign-in?error=session_error", http.StatusTemporaryRedirect)
+			return
+		}
+
+		log.Println("User sign-in successful")
 		http.Redirect(w, r, "/home?status=success", http.StatusSeeOther)
 
 	default:
