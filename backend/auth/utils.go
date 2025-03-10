@@ -9,9 +9,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"forum/backend/utils"
-
 	"github.com/google/uuid"
+
+	utils "forum/backend/util"
 )
 
 type GoogleUser struct {

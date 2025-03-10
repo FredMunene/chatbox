@@ -7,7 +7,8 @@ import (
 	"strings"
 
 	"forum/backend/models"
-	"forum/backend/utils"
+	"forum/backend/util"
+
 	_ "github.com/mattn/go-sqlite3" // SQLite3 driver
 )
 
@@ -65,13 +66,12 @@ func GetUserByEmail(email string) (models.User, error) {
 	var password sql.NullString // handle NULL passwords
 
 	query := "SELECT id, username, email, user_password FROM tblUsers WHERE email = ?"
-	err := utils.Database.QueryRow(query, email).Scan(
+	err := util.Database.QueryRow(query, email).Scan(
 		&user.ID,
 		&user.Username,
 		&user.Email,
 		&password,
 	)
-
 	if err != nil {
 		return user, err
 	}
@@ -86,7 +86,7 @@ func GetUserByEmail(email string) (models.User, error) {
 
 func GetUserByName(name string) (models.User, error) {
 	query := "SELECT id, username, email, user_password FROM tblUsers WHERE username  = ?"
-	row := utils.Database.QueryRow(query, name)
+	row := util.Database.QueryRow(query, name)
 	user, err := UserDetails(row)
 	return user, err
 }

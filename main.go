@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"forum/backend/route"
-	"forum/backend/utils"
+	utils "forum/backend/util"
 )
 
 func main() {
@@ -22,7 +22,6 @@ func main() {
 	utils.Init()
 	defer utils.Database.Close()
 
-
 	router := route.InitRoutes()
 
 	server := &http.Server{
@@ -32,7 +31,7 @@ func main() {
 		WriteTimeout: 10 * time.Second,
 	}
 
-	log.Printf("Server running at: http://localhost:%s\n","9000")
+	log.Printf("Server running at: http://localhost:%s\n", "9000")
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
