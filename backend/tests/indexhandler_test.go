@@ -19,7 +19,7 @@ func TestIndexHandler(t *testing.T) {
 	}{
 		{"Invalid Path", "GET", "/wrongpath", http.StatusNotFound},
 		{"Invalid Method", "POST", "/home", http.StatusMethodNotAllowed},
-		{"Valid Request", "GET", "/home", http.StatusOK},
+		{"Valid Request", "GET", "/home", http.StatusSeeOther},
 	}
 
 	for _, tt := range tests {
