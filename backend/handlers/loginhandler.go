@@ -19,7 +19,7 @@ var SessionStore = make(map[string]map[string]interface{})
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	var err error
-	if r.URL.Path != "/sign-in" {
+	if r.URL.Path != "/signin" {
 		util.ErrorHandler(w, "Page does not exist", http.StatusNotFound)
 		return
 	}

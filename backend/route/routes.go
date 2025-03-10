@@ -18,7 +18,11 @@ func InitRoutes() *http.ServeMux {
 
 	//  routes
 	// r.HandleFunc("/signin", handlers.SigninHandler)
-	r.HandleFunc("/home", handlers.HomeHandler)
+	r.HandleFunc("/home", handlers.IndexHandler)
+	r.HandleFunc("/", handlers.HomeHandler)
+	r.HandleFunc("/signin", handlers.LoginHandler)
+	r.HandleFunc("/signup", handlers.SignupHandler)
+	r.HandleFunc("/logout", handlers.LogoutHandler)
 
 	r.HandleFunc("/auth/google/signin", auth.GoogleSignIn)
 	r.HandleFunc("/auth/google/signup", auth.GoogleSignUp)
