@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Githaiga22/forum/backend/repositories"
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 func CommentHandler(w http.ResponseWriter, r *http.Request) {

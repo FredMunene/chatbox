@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"forum/backend/handlers"
 )
-
 
 func TestLoginHandler(t *testing.T) {
 	reqBody := []byte(`{"email": "test@example.com", "password": "password123"}`)

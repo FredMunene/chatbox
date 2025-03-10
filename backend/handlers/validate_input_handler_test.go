@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/util"
 	"github.com/stretchr/testify/assert"
 )
 

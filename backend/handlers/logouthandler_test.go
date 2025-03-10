@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/Githaiga22/forum/backend/handlers"
+	"forum/backend/handlers"
 )
 
 func TestLogoutHandler(t *testing.T) {

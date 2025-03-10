@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/Githaiga22/forum/backend/models"
-	"github.com/Githaiga22/forum/backend/repositories"
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/models"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 func GetAllPosts(db *sql.DB, tmpl *template.Template, posts []models.Post) http.HandlerFunc {

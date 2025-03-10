@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Githaiga22/forum/backend/handlers"
-	"github.com/Githaiga22/forum/backend/models"
-	"github.com/Githaiga22/forum/backend/repositories"
+	"forum/backend/handlers"
+	"forum/backend/models"
+	"forum/backend/repositories"
 )
 
 func TestGetAllPostsAPI(t *testing.T) {

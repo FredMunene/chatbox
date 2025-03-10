@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/Githaiga22/forum/backend/models"
-	"github.com/Githaiga22/forum/backend/repositories"
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/models"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 func PostDetails(w http.ResponseWriter, r *http.Request, posts []models.Post, logged bool) {

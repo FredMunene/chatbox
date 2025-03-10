@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Githaiga22/forum/backend/repositories"
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 /*

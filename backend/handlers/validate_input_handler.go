@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/util"
 )
 
 /*

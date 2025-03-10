@@ -7,7 +7,6 @@ require github.com/stretchr/testify v1.10.0
 require github.com/mattn/go-sqlite3 v1.14.24 // indirect
 
 require (
-	github.com/Githaiga22/forum v0.0.0-20250305121445-961d3c39f3d1
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
 	github.com/google/uuid v1.6.0 // indirect

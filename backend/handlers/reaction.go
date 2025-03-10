@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Githaiga22/forum/backend/repositories"
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 func ReactionHandler(w http.ResponseWriter, r *http.Request) {
