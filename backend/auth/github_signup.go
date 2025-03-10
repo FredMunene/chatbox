@@ -8,7 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"forum/backend/utils"
+	"forum/backend/handlers"
+	"forum/backend/repositories"
+	"forum/backend/util"
 )
 
 const (
@@ -27,7 +29,7 @@ func GithubSignUp(w http.ResponseWriter, r *http.Request) {
 	state := generateStateCookie(w, "signup")
 
 	params := url.Values{
-		"client_id":    {utils.GithubClientID},
+		"client_id":    {util.GithubClientID},
 		"redirect_uri": {BaseUrl + "/auth/github/callback"},
 		"scope":        {"read:user user:email"},
 		"state":        {state},
@@ -97,7 +99,7 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 		// handle user sign in
 		var userID int
 
-		err := util.Database.QueryRow("SELECT id FROM Users WHERE email = ?", user.Email).scan(&userID)
+		err := util.Database.QueryRow("SELECT id FROM tblUsers WHERE email = ?", user.Email).Scan(&userID)
 		if err != nil {
 			http.Redirect(w, r, "/sign-inp?error=no_account", http.StatusTemporaryRedirect)
 		}
@@ -108,19 +110,20 @@ func GithubCallback(w http.ResponseWriter, r *http.Request) {
 		}
 
 		handlers.EnableCors(w)
-		handlers.SetSessionCookie(w,sessionToken)
-		handlers.SetSessionData()
-		handlers.SetSessionData()
+		handlers.SetSessionCookie(w, sessionToken)
+		handlers.SetSessionData(sessionToken, "userId", userID)
+		handlers.SetSessionData(sessionToken, "userEmail", user.Email)
 
-		expiryTime := time.Now().Add(24* time.Hour)
+		expiryTime := time.Now().Add(24 * time.Hour)
 
 		err = repositories.StoreSession(userID, sessionToken, expiryTime)
 		if err != nil {
 			log.Printf("Failed to store session token:%v", err)
-			http.Redirect(w,r,"/sign-in?error=session_error", http.StatusTemporaryRedirect)
+			http.Redirect(w, r, "/sign-in?error=session_error", http.StatusTemporaryRedirect)
 			return
 		}
 
+		log.Println("User sign-in successful")
 		http.Redirect(w, r, "/home?status=success", http.StatusSeeOther)
 
 	default:
