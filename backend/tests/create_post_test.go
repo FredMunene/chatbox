@@ -2,12 +2,13 @@ package handlers_test
 
 import (
 	"bytes"
-	"forum/backend/handlers"
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"forum/backend/handlers"
 )
 
 var TestCase2 = []struct {
@@ -17,7 +18,7 @@ var TestCase2 = []struct {
 	expectedBody string
 	code         int
 }{
-	{"Test1", http.MethodGet, "/upload", "Invalid request method", http.StatusMethodNotAllowed},
+	{"Test1", http.MethodGet, "/upload", "Method Not Allowed", http.StatusMethodNotAllowed},
 }
 
 var TestCase3 = []struct {
@@ -40,7 +41,7 @@ func TestUploadMedia(t *testing.T) {
 			req := httptest.NewRequest(tc.method, tc.endPoint, nil)
 			w := httptest.NewRecorder()
 
-			handlers.CreatePost(w,req)
+			handlers.CreatePost(w, req)
 
 			resp := w.Result()
 			if resp.StatusCode != tc.code {
