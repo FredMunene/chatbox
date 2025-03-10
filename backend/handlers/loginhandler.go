@@ -7,9 +7,10 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/Githaiga22/forum/backend/models"
-	"github.com/Githaiga22/forum/backend/repositories"
-	"github.com/Githaiga22/forum/backend/util"
+	"forum/backend/models"
+	"forum/backend/repositories"
+	util "forum/backend/util"
+
 	"golang.org/x/crypto/bcrypt"
 )
 

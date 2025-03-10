@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"strings"
 	"testing"
+
+	"forum/backend/handlers"
 )
 
 func TestReactionHandler(t *testing.T) {
@@ -18,7 +20,7 @@ func TestReactionHandler(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	ReactionHandler(rr, req)
+	handlers.ReactionHandler(rr, req)
 
 	if rr.Code != http.StatusSeeOther {
 		t.Errorf("Expected status %d, got %d", http.StatusSeeOther, rr.Code)

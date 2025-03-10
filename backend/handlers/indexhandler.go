@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"forum/backend/repositories"
-	"forum/backend/util"
+	util "forum/backend/util"
 )
 
 type RequestData struct {

@@ -10,7 +10,8 @@ import (
 
 	"forum/backend/models"
 	"forum/backend/repositories"
-	"forum/backend/util"
+
+	 "forum/backend/util"
 )
 
 func SignupHandler(w http.ResponseWriter, r *http.Request) {

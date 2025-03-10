@@ -6,8 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"forum/backend/repositories"
 	"forum/backend/util"
+
+	"forum/backend/repositories"
 )
 
 /*

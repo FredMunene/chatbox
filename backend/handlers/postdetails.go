@@ -6,8 +6,9 @@ import (
 	"text/template"
 
 	"forum/backend/models"
+	util "forum/backend/util"
+
 	"forum/backend/repositories"
-	"forum/backend/util"
 )
 
 func PostDetails(w http.ResponseWriter, r *http.Request, posts []models.Post, logged bool) {

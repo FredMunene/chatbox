@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"forum/backend/utils"
+	utils "forum/backend/util"
 )
 
 func GoogleSignIn(w http.ResponseWriter, r *http.Request) {

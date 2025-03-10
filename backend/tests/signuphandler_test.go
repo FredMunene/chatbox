@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	
 	"encoding/json"
+	"forum/backend/handlers"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -22,13 +22,13 @@ func TestSignupHandler_Success(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	SignupHandler(rr, req)
+	handlers.SignupHandler(rr, req)
 
 	if rr.Code != http.StatusSeeOther {
 		t.Errorf("Expected status %d, got %d", http.StatusSeeOther, rr.Code)
 	}
 
-	var response Response
+	var response handlers.Response
 	err := json.NewDecoder(rr.Body).Decode(&response)
 	if err != nil {
 		t.Errorf("Failed to decode JSON response: %v", err)
@@ -50,13 +50,13 @@ func TestSignupHandler_MismatchedPasswords(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	SignupHandler(rr, req)
+	handlers.SignupHandler(rr, req)
 
 	if rr.Code != http.StatusOK {
 		t.Errorf("Expected status %d, got %d", http.StatusOK, rr.Code)
 	}
 
-	var response Response
+	var response handlers.Response
 	err := json.NewDecoder(rr.Body).Decode(&response)
 	if err != nil {
 		t.Errorf("Failed to decode JSON response: %v", err)

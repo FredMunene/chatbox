@@ -9,7 +9,7 @@ import (
 
 	"forum/backend/models"
 	"forum/backend/repositories"
-	"forum/backend/util"
+	util "forum/backend/util"
 )
 
 func GetAllPosts(db *sql.DB, tmpl *template.Template, posts []models.Post) http.HandlerFunc {

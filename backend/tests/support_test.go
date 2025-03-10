@@ -1,27 +1,29 @@
 package handlers
 
 import (
+	"forum/backend/handlers"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestCreateSession(t *testing.T) {
-	sessionID := CreateSession()
+	
+	sessionID := handlers.CreateSession()
 	if sessionID == "" {
 		t.Errorf("Expected non-empty session ID")
 	}
 
 	// Ensure session is created in SessionStore
-	if _, exists := SessionStore[sessionID]; !exists {
+	if _, exists := handlers.SessionStore[sessionID]; !exists {
 		t.Errorf("Session ID not found in SessionStore")
 	}
 }
 
 func TestSetSessionCookie(t *testing.T) {
 	rr := httptest.NewRecorder()
-	sessionID := CreateSession()
-	SetSessionCookie(rr, sessionID)
+	sessionID := handlers.CreateSession()
+	handlers.SetSessionCookie(rr, sessionID)
 
 	cookie := rr.Result().Cookies()
 	if len(cookie) == 0 {
@@ -34,7 +36,7 @@ func TestSetSessionCookie(t *testing.T) {
 }
 
 func TestGetSessionID(t *testing.T) {
-	sessionID := CreateSession()
+	sessionID := handlers.CreateSession()
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	req.AddCookie(&http.Cookie{Name: "session_token", Value: sessionID})
 
@@ -48,8 +50,8 @@ func TestGetSessionID(t *testing.T) {
 }
 
 func TestSetAndGetSessionData(t *testing.T) {
-	sessionID := CreateSession()
-	SetSessionData(sessionID, "username", "testuser")
+	sessionID := handlers.CreateSession()
+	handlers. SetSessionData(sessionID, "username", "testuser")
 
 	data, err := getSessionData(sessionID)
 	if err != nil {

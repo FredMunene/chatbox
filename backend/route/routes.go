@@ -17,7 +17,7 @@ func InitRoutes() *http.ServeMux {
 	r.Handle("/uploads/", http.StripPrefix("/uploads/", uploadsFs))
 
 	//  routes
-	r.HandleFunc("/signin", handlers.SigninHandler)
+	// r.HandleFunc("/signin", handlers.SigninHandler)
 	r.HandleFunc("/home", handlers.HomeHandler)
 
 	r.HandleFunc("/auth/google/signin", auth.GoogleSignIn)

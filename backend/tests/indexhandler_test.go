@@ -5,6 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"forum/backend/handlers"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,7 +27,7 @@ func TestIndexHandler(t *testing.T) {
 			req := httptest.NewRequest(tt.method, tt.url, nil)
 			rr := httptest.NewRecorder()
 
-			IndexHandler(rr, req)
+			handlers.IndexHandler(rr, req)
 
 			assert.Equal(t, tt.expectedCode, rr.Code)
 		})

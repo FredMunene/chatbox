@@ -10,7 +10,6 @@ import (
 
 	"forum/backend/handlers"
 	"forum/backend/models"
-	"forum/backend/repositories"
 )
 
 func TestGetAllPostsAPI(t *testing.T) {

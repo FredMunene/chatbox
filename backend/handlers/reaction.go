@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"forum/backend/repositories"
-	"forum/backend/util"
+	util "forum/backend/util"
 )
 
 func ReactionHandler(w http.ResponseWriter, r *http.Request) {

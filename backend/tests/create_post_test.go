@@ -1,7 +1,8 @@
-package handlers
+package handlers_test
 
 import (
 	"bytes"
+	"forum/backend/handlers"
 	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
@@ -39,7 +40,7 @@ func TestUploadMedia(t *testing.T) {
 			req := httptest.NewRequest(tc.method, tc.endPoint, nil)
 			w := httptest.NewRecorder()
 
-			CreatePost(w, req)
+			handlers.CreatePost(w,req)
 
 			resp := w.Result()
 			if resp.StatusCode != tc.code {
@@ -73,7 +74,7 @@ func TestValidateMimeType(t *testing.T) {
 				t.Fatalf("Error creating test file: %v", err)
 			}
 
-			ext, err := ValidateMimeType(file)
+			ext, err := handlers.ValidateMimeType(file)
 			if (err != nil) != tc.expectError {
 				t.Errorf("Expected error: %v, got: %v", tc.expectError, err)
 			}

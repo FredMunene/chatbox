@@ -1,15 +1,11 @@
 package handlers
 
 import (
-	
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-
 	"forum/backend/models"
-	"forum/backend/repositories"
-	"forum/backend/util"
 )
 
 // Mock repository functions
@@ -31,11 +27,26 @@ func mockGetUserByEmail(email string) (models.User, error) {
 
 func TestPostDetails(t *testing.T) {
 	// Replace repository functions with mocks
-	repositories.GetComments = mockGetComments
-	repositories.GetReactions = mockGetReactions
-	repositories.GetCategories = mockGetCategories
-	repositories.GetUserByEmail = mockGetUserByEmail
+	// repositories.GetComments = mockGetComments
+	// repositories.GetReactions = mockGetReactions
+	// repositories.GetCategories = mockGetCategories
+	// repositories.GetUserByEmail = mockGetUserByEmail
 
+	// Create a mock repository
+	mockRepo := &handlers.MockRepository{
+		GetCommentsFunc:    mockGetComments,
+		GetReactionsFunc:   mockGetReactions,
+		GetCategoriesFunc:  mockGetCategories,
+		GetUserByEmailFunc: mockGetUserByEmail,
+	}
+
+	// // Call PostDetails function
+	// PostDetails(rr, req, posts, false, mockRepo)
+
+	// // Check the response status code
+	// if status := rr.Code; status != http.StatusOK {
+	// 	t.Errorf("Expected status code %d but got %d", http.StatusOK, status)
+	// }
 	// Create a fake HTTP request
 	req, err := http.NewRequest("GET", "/post-details", nil)
 	if err != nil {
@@ -47,11 +58,11 @@ func TestPostDetails(t *testing.T) {
 
 	// Mock posts data
 	posts := []models.Post{
-		{ID: 1, Title: "Test Post", Content: "This is a test post"},
+		{ID: 1, PostTitle: "Test Post", Body: "This is a test post"},
 	}
 
 	// Call PostDetails function
-	PostDetails(rr, req, posts, false)
+	handlers.PostDetails(rr, req, posts, false)
 
 	// Check the response status code
 	if status := rr.Code; status != http.StatusOK {

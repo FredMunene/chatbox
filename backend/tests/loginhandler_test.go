@@ -25,7 +25,7 @@ func TestLoginHandler(t *testing.T) {
 		t.Errorf("Handler returned wrong status code: got %v want %v", status, http.StatusOK)
 	}
 
-	var res Response
+	var res handlers.Response
 	if err := json.Unmarshal(rr.Body.Bytes(), &res); err != nil {
 		t.Errorf("Could not parse response body: %v", err)
 	}
