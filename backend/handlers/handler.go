@@ -20,7 +20,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cookie, _ := getSessionID(r)
+	cookie, _ := GetSessionID(r)
 	_, ok := SessionStore[cookie]
 	if ok {
 		http.Redirect(w, r, "/home", http.StatusSeeOther)

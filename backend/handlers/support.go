@@ -27,7 +27,7 @@ func SetSessionCookie(w http.ResponseWriter, sessionID string) {
 	http.SetCookie(w, cookie)
 }
 
-func getSessionID(r *http.Request) (string, error) {
+func GetSessionID(r *http.Request) (string, error) {
 	cookie, err := r.Cookie("session_token")
 	if err != nil {
 		return "", err
@@ -35,7 +35,7 @@ func getSessionID(r *http.Request) (string, error) {
 	return cookie.Value, nil
 }
 
-func getSessionData(sessionID string) (map[string]interface{}, error) {
+func GetSessionData(sessionID string) (map[string]interface{}, error) {
 	sessionData, exists := SessionStore[sessionID]
 	if !exists {
 		return nil, fmt.Errorf("session not found")
@@ -53,7 +53,7 @@ func EnableCors(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func isValidEmail(email string) bool {
+func IsValidEmail(email string) bool {
 	emailRegex := `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
 	re := regexp.MustCompile(emailRegex)
 	return re.MatchString(email)
@@ -64,7 +64,7 @@ func DeleteSession(userId int) {
 		return
 	}
 	for k := range SessionStore {
-		sessionData, _ := getSessionData(k)
+		sessionData, _ := GetSessionData(k)
 		if len(sessionData) == 0 {
 			continue
 		}

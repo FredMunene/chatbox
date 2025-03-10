@@ -67,13 +67,13 @@ func PostDetails(w http.ResponseWriter, r *http.Request, posts []models.Post, lo
 	}
 	var user models.User
 	if logged {
-		cookie, err := getSessionID(r)
+		cookie, err := GetSessionID(r)
 		if err != nil {
 			log.Println("Invalid Session")
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
-		sessionData, err := getSessionData(cookie)
+		sessionData, err := GetSessionData(cookie)
 		if err != nil {
 			log.Println("Invalid Session")
 			http.Redirect(w, r, "/", http.StatusSeeOther)

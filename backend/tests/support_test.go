@@ -1,14 +1,14 @@
 package handlers
 
 import (
-	"forum/backend/handlers"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"forum/backend/handlers"
 )
 
 func TestCreateSession(t *testing.T) {
-	
 	sessionID := handlers.CreateSession()
 	if sessionID == "" {
 		t.Errorf("Expected non-empty session ID")
@@ -40,7 +40,7 @@ func TestGetSessionID(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	req.AddCookie(&http.Cookie{Name: "session_token", Value: sessionID})
 
-	retrievedSessionID, err := getSessionID(req)
+	retrievedSessionID, err := handlers.GetSessionID(req)
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}
@@ -51,9 +51,9 @@ func TestGetSessionID(t *testing.T) {
 
 func TestSetAndGetSessionData(t *testing.T) {
 	sessionID := handlers.CreateSession()
-	handlers. SetSessionData(sessionID, "username", "testuser")
+	handlers.SetSessionData(sessionID, "username", "testuser")
 
-	data, err := getSessionData(sessionID)
+	data, err := handlers.GetSessionData(sessionID)
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}
@@ -67,13 +67,13 @@ func TestIsValidEmail(t *testing.T) {
 	invalidEmails := []string{"invalid-email", "user@com", "@domain.com"}
 
 	for _, email := range validEmails {
-		if !isValidEmail(email) {
+		if !handlers.IsValidEmail(email) {
 			t.Errorf("Expected valid email for %q", email)
 		}
 	}
 
 	for _, email := range invalidEmails {
-		if isValidEmail(email) {
+		if handlers.IsValidEmail(email) {
 			t.Errorf("Expected invalid email for %q", email)
 		}
 	}

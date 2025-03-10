@@ -15,7 +15,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cookie, err := getSessionID(r)
+	cookie, err := GetSessionID(r)
 	if err != nil {
 		log.Println("Invalid Session:", err)
 		http.Redirect(w, r, "/", http.StatusSeeOther)

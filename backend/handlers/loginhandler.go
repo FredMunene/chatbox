@@ -26,7 +26,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 		email := r.FormValue("email")
-		if isValidEmail(email) {
+		if IsValidEmail(email) {
 			user, err = repositories.GetUserByEmail(email)
 			if err != nil {
 				log.Println("Error fetching user", err)
