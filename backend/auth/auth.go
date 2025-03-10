@@ -4,8 +4,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func ComparePassword(userPswd string, dbPsswd string) error {
-	err := bcrypt.CompareHashAndPassword([]byte(dbPsswd), []byte(userPswd))
+func ComparePassword(userPassword string, dbPassword string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(dbPassword), []byte(userPassword))
 	if err != nil {
 		return err
 	}
